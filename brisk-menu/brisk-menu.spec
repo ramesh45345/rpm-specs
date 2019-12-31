@@ -4,6 +4,7 @@
 #### Download source: spectool -g -R brisk-menu.spec
 #### Install dependencies: sudo dnf builddep ./brisk-menu.spec
 #### Build both SRPM and RPM: rpmbuild -ba brisk-menu.spec
+#### Lint: rpmlint brisk-menu.spec
 ####
 #### Build with mock:
 #### Ensure RPM Dev folder structure is set up: rpmdev-setuptree
