@@ -1,0 +1,12 @@
+# Ignore everything
+*
+
+# But not these files...
+!.gitignore
+!LICENSE
+!README.md
+!*.spec
+# etc...
+
+# ...even if they are in subdirectories
+!*/
