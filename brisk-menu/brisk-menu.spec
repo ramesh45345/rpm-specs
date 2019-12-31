@@ -1,8 +1,8 @@
 #### Local build instructions:
-#### Ensure RPM Dev tools are installed: yum install -y rpmdevtools
-#### Ensure RPM Dev folder structure is set up: rpmdev-setuptree
+#### Ensure RPM Dev tools are installed: dnf install -y rpmdevtools
+#### Ensure RPM Dev folder structure is set up in $HOME/rpmbuild : rpmdev-setuptree
 #### Download source: spectool -g -R brisk-menu.spec
-#### Install dependancies: sudo dnf builddep ./brisk-menu.spec
+#### Install dependencies: sudo dnf builddep ./brisk-menu.spec
 #### Build both SRPM and RPM: rpmbuild -ba brisk-menu.spec
 ####
 #### Build with mock:
@@ -12,7 +12,7 @@
 #### Run mock: mock --verbose <SRPM path>
 
 %define name brisk-menu
-%define version 0.5.0
+%define version 0.6.1
 %define build_timestamp %{lua: print(os.date("%Y%m%d"))}
 
 Summary: An efficient menu for the MATE Desktop.
@@ -20,6 +20,7 @@ Name: %{name}
 Version: %{version}
 Release: %{build_timestamp}
 Source0: https://github.com/getsolus/brisk-menu/archive/master.tar.gz#/%{name}-%{version}-%{release}.tar.gz
+Source1: https://github.com/getsolus/brisk-menu-translations/archive/master.tar.gz#/%{name}-translations.tar.gz
 License: GPL-2.0+ AND CC-BY-SA-4.0
 BuildRoot: %{_tmppath}/%{name}-buildroot
 Prefix: /usr
@@ -29,6 +30,7 @@ Packager: NA
 BuildRequires:  hicolor-icon-theme
 BuildRequires:  meson
 BuildRequires:  gcc
+BuildRequires:  ninja-build
 BuildRequires:  pkgconfig
 BuildRequires:  pkgconfig(gdk-x11-3.0) >= 3.18.0
 BuildRequires:  pkgconfig(gio-unix-2.0) >= 2.44.0
@@ -45,7 +47,13 @@ Url: https://github.com/getsolus/brisk-menu
 brisk-menu is a modern and efficient menu designed to improve the MATE Desktop Environment with modern, first-class options.
 
 %prep
-%setup -q -n %{name}-master
+# Extract the translations.
+%setup -T -b 1 -n %{name}-translations-master
+%setup -n %{name}-master
+# Remove the existing translations folder.
+rm -rf $RPM_BUILD_DIR/%{name}-master/subprojects/translations
+# Copy translations into the subprojects folder.
+cp -ar $RPM_BUILD_DIR/%{name}-translations-master/ $RPM_BUILD_DIR/%{name}-master/subprojects/translations
 
 %build
 %meson
