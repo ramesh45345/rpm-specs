@@ -23,10 +23,9 @@ Source0: https://github.com/getsolus/brisk-menu/archive/master.tar.gz#/%{name}-%
 Source1: https://github.com/getsolus/brisk-menu-translations/archive/master.tar.gz#/%{name}-translations.tar.gz
 License: GPL-2.0+ AND CC-BY-SA-4.0
 BuildRoot: %{_tmppath}/%{name}-buildroot
-Prefix: /usr
-BuildArch: x86_64
+Prefix: %{_prefix}
+ExclusiveArch: %{ix86} %{arm} x86_64
 Vendor: solus-project
-Packager: NA
 BuildRequires:  hicolor-icon-theme
 BuildRequires:  meson
 BuildRequires:  gcc
@@ -48,8 +47,8 @@ brisk-menu is a modern and efficient menu designed to improve the MATE Desktop E
 
 %prep
 # Extract the translations.
-%setup -T -b 1 -n %{name}-translations-master
-%setup -n %{name}-master
+%setup -q -T -b 1 -n %{name}-translations-master
+%setup -q -n %{name}-master
 # Remove the existing translations folder.
 rm -rf $RPM_BUILD_DIR/%{name}-master/subprojects/translations
 # Copy translations into the subprojects folder.
