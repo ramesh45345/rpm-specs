@@ -20,7 +20,7 @@ Summary: An efficient menu for the MATE Desktop.
 Name: %{name}
 Version: %{version}
 Release: %{build_timestamp}
-Source0: https://github.com/getsolus/brisk-menu/archive/master.tar.gz#/%{name}-%{version}-%{release}.tar.gz
+Source0: https://github.com/getsolus/brisk-menu/archive/master.tar.gz#/%{name}-master.tar.gz
 Source1: https://github.com/getsolus/brisk-menu-translations/archive/master.tar.gz#/%{name}-translations.tar.gz
 License: GPL-2.0+ AND CC-BY-SA-4.0
 BuildRoot: %{_tmppath}/%{name}-buildroot
